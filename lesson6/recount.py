@@ -1,0 +1,1 @@
+print(*map("Осталось секунд: {}".format, range(int(input()), -1, -1)), "Пуск", sep="\n")
