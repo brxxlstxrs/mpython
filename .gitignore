@@ -1,3 +1,4 @@
 env/
 coc-pyright.json
 *.pyc
+__pycache__/
