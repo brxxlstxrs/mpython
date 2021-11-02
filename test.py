@@ -1,6 +1,4 @@
-import pdb
-def print_hello() -> None:
-    print('Hello')
+from hashlib import sha256
 
-if __name__ == '__main__':
-    print_hello()
+s = input('Enter something:\n')
+print(sha256(s.encode('utf-8')).hexdigest())
