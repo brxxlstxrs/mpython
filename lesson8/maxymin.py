@@ -21,6 +21,5 @@ for i in range(n):
         flag2 = 0
     if bglobal < b:
         bglobal = b
-    else:
         count = i + 1
 print(count, bglobal)
