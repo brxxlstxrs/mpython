@@ -2,3 +2,5 @@
 coc-pyright.json
 *.pyc
 __pycache__/
+test*.py
+
