@@ -1,25 +1,34 @@
- 
-set encoding=utf-8
+" Let's make it beautiful
 set number relativenumber
 set cc=81
 set background=dark
-  
+set termguicolors
+
+
+" Tab settings 
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
+
+
+" Basic settings 
+set encoding=utf-8
 set updatetime=100
-set termguicolors
 set hidden
 set nobackup
 set nowritebackup
 
+
+" Coc settings 
 let g:coc_global_extensions = [
         \'coc-pyright',
         \'coc-tsserver',
         \'coc-json']
 
+
+" Plugins 
 call plug#begin()
   Plug 'neoclide/coc.nvim', {'branch': 'release'} 
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -37,9 +46,11 @@ call plug#begin()
   Plug 'joshdick/onedark.vim'
 call plug#end()
 
-let g:gruvbox_material_palette = 'mix'
-colorscheme gruvbox-material
 
+" other settings
+let g:gruvbox_material_palette = 'mix'
 let g:gruvbox_material_disable_italic_comment = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+
+colorscheme gruvbox-material
