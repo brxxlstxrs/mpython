@@ -11,7 +11,7 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
-
+filetype indent on
 
 " Basic settings 
 set encoding=utf-8
@@ -19,14 +19,6 @@ set updatetime=100
 set hidden
 set nobackup
 set nowritebackup
-
-
-" Coc settings 
-let g:coc_global_extensions = [
-        \'coc-pyright',
-        \'coc-tsserver',
-        \'coc-json']
-
 
 " Plugins 
 call plug#begin()
@@ -46,6 +38,11 @@ call plug#begin()
   Plug 'joshdick/onedark.vim'
 call plug#end()
 
+" Coc settings 
+let g:coc_global_extensions = [
+        \'coc-pyright',
+        \'coc-tsserver',
+        \'coc-json']
 
 " other settings
 let g:gruvbox_material_palette = 'mix'
