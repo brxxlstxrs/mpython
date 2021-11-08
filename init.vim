@@ -11,7 +11,6 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
-filetype indent on
 
 " Basic settings 
 set encoding=utf-8
