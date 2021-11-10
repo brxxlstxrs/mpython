@@ -4,7 +4,6 @@ set cc=81
 set background=dark
 set termguicolors
 
-
 " Tab settings 
 set tabstop=4
 set softtabstop=4
@@ -18,6 +17,7 @@ set updatetime=100
 set hidden
 set nobackup
 set nowritebackup
+set noswapfile
 
 " Plugins 
 call plug#begin()
@@ -40,8 +40,8 @@ call plug#end()
 " Coc settings 
 let g:coc_global_extensions = [
         \'coc-pyright',
-        \'coc-tsserver',
-        \'coc-json']
+        \'coc-json',
+        \'coc-tsserver']
 
 " other settings
 let g:gruvbox_material_palette = 'mix'
