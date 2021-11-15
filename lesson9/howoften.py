@@ -8,5 +8,5 @@ for i in range(n):
     if i == 0:
         last = now
     last = last & now
-print(*last, sep='\n')
-
+    now.clear()
+print(*last, sep='\n') 
