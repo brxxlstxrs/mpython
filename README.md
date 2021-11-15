@@ -1,2 +1,2 @@
-## mpython
-my python project (yandexlyceum)
+# MPYTHON
+My Yandex problem solving
