@@ -33,7 +33,6 @@ call plug#begin()
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   Plug 'sainnhe/gruvbox-material'
-  Plug 'sainnhe/everforest'
   Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -47,4 +46,5 @@ let g:gruvbox_material_disable_italic_comment = 1
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline_powerline_fonts = 1
 
+" set colorscheme
 colorscheme gruvbox-material
