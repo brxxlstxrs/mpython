@@ -37,14 +37,13 @@ call plug#begin()
 call plug#end()
 
 " Coc settings 
-let g:coc_global_extensions = [
-        \'coc-pyright']
+" let g:coc_global_extensions = [
+"        \'coc-pyright']
 
 " other settings
 let g:gruvbox_material_palette = 'mix'
 let g:gruvbox_material_disable_italic_comment = 1
 let g:airline#extensions#tabline#enabled = 1
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 
-" set colorscheme
 colorscheme gruvbox-material
