@@ -39,9 +39,7 @@ call plug#end()
 
 " Coc settings 
 let g:coc_global_extensions = [
-        \'coc-pyright',
-        \'coc-json',
-        \'coc-tsserver']
+        \'coc-pyright']
 
 " other settings
 let g:gruvbox_material_palette = 'mix'
