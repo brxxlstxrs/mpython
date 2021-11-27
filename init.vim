@@ -1,5 +1,5 @@
 " Let's make it beautiful
-set number relativenumber
+set number
 set cc=81
 set background=dark
 set termguicolors
