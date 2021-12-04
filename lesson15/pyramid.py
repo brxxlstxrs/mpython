@@ -4,9 +4,13 @@ for _ in range(int(input())):
     slst = list()
     csh = 100
     while lst:
-        if lst[0] <= csh:
+        if lst[0] == csh:
             csh = lst.pop(0)
-        elif lst[-1] <= csh:
+        elif lst[-1] == csh:
+            csh = lst.pop()
+        elif lst[0] < csh:
+            csh = lst.pop(0)
+        elif lst[-1] < csh:
             csh = lst.pop()
         else:
             f = 1
@@ -16,4 +20,3 @@ for _ in range(int(input())):
         print('НЕТ')
         continue
     print(*slst)
-        
