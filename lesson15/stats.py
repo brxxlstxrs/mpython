@@ -1,0 +1,15 @@
+import statistics as sts
+biglst = list()
+med = list()
+mod = list()
+for i in range(int(input())):
+    line = list(map(int, input().split()))
+    med.append(sts.median(line))
+    mod.append(sts.mode(line))
+    biglst.extend(line)
+print(*med)
+print(*mod)
+print(sts.median(med))
+print(sts.mode(mod))
+print(sts.median(biglst))
+print(sts.mode(biglst))

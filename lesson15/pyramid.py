@@ -4,17 +4,8 @@ for _ in range(int(input())):
     slst = list()
     csh = 100
     while lst:
-        if lst[0] == csh:
-            csh = lst.pop(0)
-        elif lst[-1] == csh:
-            csh = lst.pop()
-        elif lst[0] < csh:
-            csh = lst.pop(0)
-        elif lst[-1] < csh:
-            csh = lst.pop()
-        else:
-            f = 1
-            break
+        match lst[0], lst[-1], csh:
+            case 
         slst.append(csh)
     if f:
         print('НЕТ')
