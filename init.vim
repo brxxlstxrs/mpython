@@ -8,7 +8,7 @@ call plug#begin()
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'ryanoasis/vim-devicons'
-  Plug 'jiangmiao/auto-pairs'
+  Plug 'LunarWatcher/auto-pairs'
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   Plug 'sainnhe/gruvbox-material'
@@ -26,7 +26,6 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-set autoindent
 
 " Basic settings 
 set encoding=utf-8
@@ -35,6 +34,7 @@ set hidden
 set nobackup
 set nowritebackup
 set noswapfile
+set mouse=a
 
 " Theme options
 let g:gruvbox_material_palette = 'mix'
