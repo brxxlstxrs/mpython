@@ -1,6 +1,9 @@
-*env/
+.env
+.venv
+env/
+venv/
 coc-pyright.json
-*.pyc
+*.py[cod]
 __pycache__/
 test*.py
 
