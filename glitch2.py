@@ -12,10 +12,17 @@ def args_init():
     return args
 
 
-def make_image(filename, filter_, *args, **kw):
-    with Image.open(filename) as im:
-        im.convert('RGB')
-        return filter_(im, *args, **kw)
+def opener(filename):
+    def decorator(func):
+        def wrap(*args, **kw):
+            try:
+                with Image.open(filename) as im:
+                    im.convert('RGB')
+                    return func(im, *args, **kw)
+            except:
+                pass
+        return wrap
+    return decorator
 
 
 def lines(im, wd=2):
@@ -34,7 +41,7 @@ def main():
     args = args_init()
     filt = functs[args.filter]
     source, out, addon = args.input, args.out, args.addon
-    im = make_image(source, filt, addon)
+    im = opener(source)(filt)(addon)
     im.save(out, 'PNG')
 
 if __name__ == '__main__':
