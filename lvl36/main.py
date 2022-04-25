@@ -1,3 +1,4 @@
+from colors import *
 from board import Board
 
 

@@ -1,27 +1,5 @@
-from colors import WHITE, BLACK, opponent
+from colors import *
 from chesspieces import Bishop, Knight, Queen, Rook
-
-
-def define_the_direction_and_lenght(row, col, row1, col1):
-    '''Определяет направление хода и его длину и возвращает их'''
-    direction = ''
-    if row1 > row:
-        direction = 'top'
-    else:
-        direction = 'down'
-    if col1 > col:
-        direction += 'right'
-    else:
-        direction += 'left'
-
-    if len(direction) < 6:  # если направление не диагонално
-        if row1 == row:  # ход лево/прав длина соответствует abs(col1 - col)
-            length = abs(col1 - col)  # длина
-        else:  # ход вверх/вниз
-            length = abs(row1 - row)  # длина
-    else:  # если направление диагонально, то abs(row1 - row) == abd(col1 - col)
-        lenght = abs(col1 - col)
-    return direction, lenght  # type: ignore
 
 
 def correct_coords(row, col):
@@ -63,12 +41,29 @@ class Board:
         return False
 
 
-    def get_line(self, x, y, d, length): # d -- направление
-        '''Возвращает линию на доске от x, y длинной lenght, 
-        с направлением direction'''
-        dy = -1 if 'top' in d else 1 if 'down' in d else 0
-        dx = -1 if 'left' in d else 1 if 'right' in d else 0
-        return [self.field[y + dy * i][x + dx * i] for i in range(length)]
+    def way_is_clear(self, row, col, row1, col1):
+        '''Проверяет свободен ли путь, возращает True/False'''
+        dy = 0
+        dx = 0
+        if row1 > row:
+            dy = 1
+        elif row1 < row:
+            dy = -1
+        if col1 > col:
+            dx = 1
+        elif col1 < col:
+            dx = -1
+        row_now, col_now = row + dy, col + dx
+        while row_now != row1 and col_now != col1:
+            if self.field[row_now][col_now] is not None:
+                return False
+            row_now += dy
+            col_now += dx
+        if self.field[row_now][col_now] is not None:
+            if self.field[row_now][col_now].get_color() == self.color:
+                return False
+        return True
+
 
     def move_piece(self, row, col, row1, col1):
         """Переместить фигуру из точки (row, col) в точку (row1, col1).
@@ -84,22 +79,13 @@ class Board:
             return False
         if piece.get_color() != self.color:
             return False
-        if self.is_under_attack(row1, col1, piece.get_color()):
-            return False
         if not piece.can_move(row1, col1):
             return False
 
-        # определяем направление и длину хода
-        direction, lenght = define_the_direction_and_lenght(row, col, row1, col1)
-
-        move_line = self.get_line(row, col, direction, lenght)  # линия хода
-        
-        if set(move_line) != {None}:  # если линия хода не пустая
-            if (set(move_line[:-1]) != None and
-                    move_line[-1].get_color() == piece.get_color()):
-                # и если на последней клетки хода не стоит противник, фигура того же цвета
+        if type(piece) is not Knight:  # если фигура не является Конем
+            if not self.way_is_clear(row, col, row1, col1):
+                # если на пути нет мешающих фигур
                 return False
-        
 
         self.field[row][col] = None  # Снять фигуру.
         self.field[row1][col1] = piece  # Поставить на новое место.

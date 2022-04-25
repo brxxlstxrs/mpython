@@ -1,4 +1,4 @@
-from colors import WHITE, BLACK, opponent
+from colors import *
 
 
 class Pawn:
