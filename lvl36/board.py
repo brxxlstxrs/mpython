@@ -1,5 +1,4 @@
-from colors import *
-from chesspieces import Bishop, Knight, Queen, Rook
+from chesspieces import Bishop, Knight, Pawn, Queen, Rook, WHITE, opponent
 
 
 def correct_coords(row, col):
@@ -17,6 +16,9 @@ class Board:
 
     def current_player_color(self):
         return self.color
+
+    def change_cell(self, row, col, piece):
+        self.field[row][col] = piece
 
     def cell(self, row, col):
         """Возвращает строку из двух символов. Если в клетке (row, col)
@@ -84,12 +86,29 @@ class Board:
 
         if type(piece) is not Knight:  # если фигура не является Конем
             if not self.way_is_clear(row, col, row1, col1):
-                # если на пути нет мешающих фигур
+                # если на пути есть мешающие фигуры
                 return False
 
-        self.field[row][col] = None  # Снять фигуру.
-        self.field[row1][col1] = piece  # Поставить на новое место.
+        self.change_cell(col, row, None)  # Снять фигуру.
+        self.change_cell(col1, row1, piece)  # Поставить на новое место.
         piece.set_position(row1, col1)
         self.color = opponent(self.color)
         return True
 
+    def set_up_default_arrangement(self):
+        # расставляем фигуры:
+        for i in range(8):  # пешки
+            self.change_cell(1, i, Pawn)
+            self.change_cell(7, i, Pawn)
+        for i in range(0, 8, 7): # остальные
+            # ладьи
+            self.change_cell(i, 0, Rook)
+            self.change_cell(i, 7, Rook)
+            # кони
+            self.change_cell(i, 1, Knight)
+            self.change_cell(i, 6, Knight)
+            # слоны
+            self.change_cell(i, 2, Bishop)
+            self.change_cell(i, 5, Board)
+            # ферзь
+            self.change_cell(i, 3, Queen)

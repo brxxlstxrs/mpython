@@ -1,22 +1,37 @@
-from colors import *
+from colors import WHITE, BLACK, opponent
 
 
-class Pawn:
- 
+class ChessPiece:
     def __init__(self, row, col, color):
         self.row = row
         self.col = col
         self.color = color
- 
+        self.icon = 'd'  # дефолтный символ фигуры
+
     def set_position(self, row, col):
         self.row = row
         self.col = col
- 
+    
+    def get_position(self):
+        return self.row, self.col
+
     def char(self):
-        return 'P'
- 
+        return self.icon
+
     def get_color(self):
         return self.color
+
+    @staticmethod
+    def on_board(row, col):
+        if 0 <= row < 8 and 0 <= col < 8:
+            return True
+        return False
+
+
+class Pawn(ChessPiece):
+    def __init__(self, row, col, color):
+        super().__init__(row, col, color)
+        self.icon = 'P'
  
     def can_move(self, row, col):
         # Пешка может ходить только по вертикали
@@ -44,56 +59,26 @@ class Pawn:
         return False
 
 
-class Rook:
- 
+class Rook(ChessPiece):
     def __init__(self, row, col, color):
-        self.row = row
-        self.col = col
-        self.color = color
- 
-    def set_position(self, row, col):
-        self.row = row
-        self.col = col
- 
-    def char(self):
-        return 'R'
- 
-    def get_color(self):
-        return self.color
- 
+        super().__init__(row, col, color)
+        self.icon = 'R'
+
     def can_move(self, row, col):
         # Невозможно сделать ход в клетку, которая не лежит в том же ряду
         # или столбце клеток.
         if self.row != row and self.col != col:
             return False
- 
         return True
 
 
-class Knight:
-    move = {1, 2}
+class Knight(ChessPiece):
+    move = {2, 1}  # ход коня - два шага вперед и оин в сторону
 
     def __init__(self, row, col, color):
-        self.row = row
-        self.col = col
-        self.color = color
+        super().__init__(row, col, color)
+        self.icon = 'N'
  
-    def set_position(self, row, col):
-        self.row = row
-        self.col = col
- 
-    def char(self):
-        return 'N'
- 
-    def get_color(self):
-        return self.color
-
-    @staticmethod
-    def on_board(row, col):
-        if 0 <= row < 8 and 0 <= col < 8:
-            return True
-        return False
-
     def can_move(self, row, col):
         # Предотвращение выхода за пределы доски
         if not self.on_board(row, col):
@@ -105,28 +90,11 @@ class Knight:
         return False
 
 
-class Bishop:
+class Bishop(ChessPiece):
     def __init__(self, row, col, color):
-        self.row = row
-        self.col = col
-        self.color = color
+        super().__init__(row, col, color)
+        self.icon = 'B'
  
-    def set_position(self, row, col):
-        self.row = row
-        self.col = col
- 
-    def char(self):
-        return 'B'
- 
-    def get_color(self):
-        return self.color
-
-    @staticmethod
-    def on_board(row, col):
-        if 0 <= row < 8 and 0 <= col < 8:
-            return True
-        return False
-
     def can_move(self, row, col):
         if not self.on_board(row, col):
             return False
@@ -136,27 +104,10 @@ class Bishop:
         return False
 
 
-class Queen:
+class Queen(ChessPiece):
     def __init__(self, row, col, color):
-        self.row = row
-        self.col = col
-        self.color = color
- 
-    def set_position(self, row1, col1):
-        self.row = row1
-        self.col = col1
- 
-    def char(self):
-        return 'Q'
- 
-    def get_color(self):
-        return self.color
-
-    @staticmethod
-    def on_board(row, col):
-        if 0 <= row < 8 and 0 <= col < 8:
-            return True
-        return False
+        super().__init__(row, col, color)
+        self.icon = 'Q'
 
     def can_move(self, row, col):
         if not self.on_board(row, col):
