@@ -1,4 +1,4 @@
-from chesspieces import Bishop, Knight, Pawn, Queen, Rook, WHITE, BLACK, opponent
+from chesspieces import *
 
 
 def correct_coords(row, col):
@@ -10,15 +10,28 @@ class Board:
     def __init__(self):
         self.color = WHITE
         self.field = []
+
         for row in range(8):
             self.field.append([None] * 8)
+            self.field[0] = [
+                Rook(WHITE), Knight(WHITE), Bishop(WHITE), Queen(WHITE),
+                King(WHITE), Bishop(WHITE), Knight(WHITE), Rook(WHITE)
+            ]
+            self.field[1] = [
+                Pawn(WHITE), Pawn(WHITE), Pawn(WHITE), Pawn(WHITE),
+                Pawn(WHITE), Pawn(WHITE), Pawn(WHITE), Pawn(WHITE)
+            ]
+            self.field[6] = [
+                Pawn(BLACK), Pawn(BLACK), Pawn(BLACK), Pawn(BLACK),
+                Pawn(BLACK), Pawn(BLACK), Pawn(BLACK), Pawn(BLACK)
+            ]
+            self.field[7] = [
+                Rook(BLACK), Knight(BLACK), Bishop(BLACK), Queen(BLACK),
+                King(BLACK), Bishop(BLACK), Knight(BLACK), Rook(BLACK)
+            ]
 
     def current_player_color(self):
         return self.color
-
-    def make_board_piece(self, row, col, piecename, color):
-        '''Создает фигуру piece и ставит ее в клетку row, col на доске'''
-        self.field[row][col] = piecename(row, col, color)
 
     def cell(self, row, col):
         """Возвращает строку из двух символов. Если в клетке (row, col)
@@ -68,10 +81,10 @@ class Board:
 
 
     def move_piece(self, row, col, row1, col1):
-        """Переместить фигуру из точки (row, col) в точку (row1, col1).
-        Если перемещение возможно, метод выполнит его и вернет True.
-        Если нет --- вернет False"""
-
+        '''Переместить фигуру из точки (row, col) в точку (row1, col1).
+        Если перемещение возможно, метод выполнит его и вернёт True.
+        Если нет --- вернёт False'''
+ 
         if not correct_coords(row, col) or not correct_coords(row1, col1):
             return False
         if row == row1 and col == col1:
@@ -81,37 +94,15 @@ class Board:
             return False
         if piece.get_color() != self.color:
             return False
-        if not piece.can_move(row1, col1):
-            return False
-
-        if type(piece) is not Knight:  # если фигура не является Конем
-            if not self.way_is_clear(row, col, row1, col1):
-                # если на пути есть мешающие фигуры
+        if self.field[row1][col1] is None:
+            if not piece.can_move(self, row, col, row1, col1):
                 return False
-
+        elif self.field[row1][col1].get_color() == opponent(piece.get_color()):
+            if not piece.can_attack(self, row, col, row1, col1):
+                return False
+        else:
+            return False
         self.field[row][col] = None  # Снять фигуру.
         self.field[row1][col1] = piece  # Поставить на новое место.
-        piece.set_position(row1, col1)
         self.color = opponent(self.color)
         return True
-
-    def set_up_default_arrangement(self):
-        # расставляем фигуры:
-        for i in range(8):  # пешки
-            self.make_board_piece(1, i, Pawn, BLACK)
-            self.make_board_piece(7, i, Pawn, WHITE)
-
-        current_color = WHITE
-        for i in range(0, 8, 7): # остальные
-            # ладьи
-            self.make_board_piece(i, 0, Rook, current_color)
-            self.make_board_piece(i, 7, Rook, current_color)
-            # кони
-            self.make_board_piece(i, 1, Knight, current_color)
-            self.make_board_piece(i, 6, Knight, current_color)
-            # слоны
-            self.make_board_piece(i, 2, Bishop, current_color)
-            self.make_board_piece(i, 5, Board, current_color)
-            # ферзь
-            self.make_board_piece(i, 3, Queen, current_color)
-            current_color = BLACK

@@ -144,8 +144,9 @@ class Board:
     def current_player_color(self):
         return self.color
 
-    def change_cell(self, row, col, piece):
-        self.field[row][col] = piece
+    def make_board_piece(self, row, col, piecename, color):
+        '''Создает фигуру piece и ставит ее в клетку row, col на доске'''
+        self.field[row][col] = piecename(row, col, color)
 
     def cell(self, row, col):
         """Возвращает строку из двух символов. Если в клетке (row, col)
@@ -216,8 +217,8 @@ class Board:
                 # если на пути есть мешающие фигуры
                 return False
 
-        self.change_cell(col, row, None)  # Снять фигуру.
-        self.change_cell(col1, row1, piece)  # Поставить на новое место.
+        self.field[row][col] = None  # Снять фигуру.
+        self.field[row1][col1] = piece  # Поставить на новое место.
         piece.set_position(row1, col1)
         self.color = opponent(self.color)
         return True
@@ -225,20 +226,23 @@ class Board:
     def set_up_default_arrangement(self):
         # расставляем фигуры:
         for i in range(8):  # пешки
-            self.change_cell(1, i, Pawn)
-            self.change_cell(7, i, Pawn)
+            self.make_board_piece(1, i, Pawn, BLACK)
+            self.make_board_piece(7, i, Pawn, WHITE)
+
+        current_color = WHITE
         for i in range(0, 8, 7): # остальные
             # ладьи
-            self.change_cell(i, 0, Rook)
-            self.change_cell(i, 7, Rook)
+            self.make_board_piece(i, 0, Rook, current_color)
+            self.make_board_piece(i, 7, Rook, current_color)
             # кони
-            self.change_cell(i, 1, Knight)
-            self.change_cell(i, 6, Knight)
+            self.make_board_piece(i, 1, Knight, current_color)
+            self.make_board_piece(i, 6, Knight, current_color)
             # слоны
-            self.change_cell(i, 2, Bishop)
-            self.change_cell(i, 5, Board)
+            self.make_board_piece(i, 2, Bishop, current_color)
+            self.make_board_piece(i, 5, Board, current_color)
             # ферзь
-            self.change_cell(i, 3, Queen)
+            self.make_board_piece(i, 3, Queen, current_color)
+            current_color = BLACK
 
 
 def print_board(board): # Распечатать доску в текстовом виде (см. скриншот)
