@@ -247,8 +247,6 @@ class King:
 
 
 class Queen:
-    '''Класс ферзя. Пока что заглушка, которая может ходить в любую клетку.'''
-
     def __init__(self, color):
         self.color = color
 
@@ -259,7 +257,19 @@ class Queen:
         return 'Q'
 
     def can_move(self, board, row, col, row1, col1):
-        return True  # Заглушка
+        if abs(row - row1) != abs(col - col1):
+            if row != row1 and col != col1:
+                return False
+
+        step_y = 1 if row1 > row else -1 if row1 < row else 0 
+        step_x = 1 if col1 > col else -1 if col1 < col else 0
+
+        while row != row1 and col != col1:
+            row += step_y
+            col += step_x
+            if board.get_piece(row, col) is not None:
+                return False
+        return True
 
     def can_attack(self, board, row, col, row1, col1):
         return self.can_move(board, row, col, row1, col1)
