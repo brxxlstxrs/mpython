@@ -1,23 +1,28 @@
 " Plugins 
 call plug#begin()
-  Plug 'neoclide/coc.nvim', {'branch': 'release'} 
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'numToStr/Comment.nvim'
-  Plug 'kyazdani42/nvim-web-devicons'
-  Plug 'kyazdani42/nvim-tree.lua'
-  Plug 'jiangmiao/auto-pairs'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-fugitive'
-  Plug 'sainnhe/gruvbox-material'
-  Plug 'joshdick/onedark.vim'
-  Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'numToStr/Comment.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'jiangmiao/auto-pairs'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'sainnhe/gruvbox-material'
+Plug 'joshdick/onedark.vim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+" Plug 'feline-nvim/feline.nvim'
 call plug#end()
 
-" Let's make it beautiful appearance
+" Let's make it beautiful and used
 set number
 set cc=81
 set background=dark
@@ -41,9 +46,44 @@ set mouse=a
 " leader
 let mapleader = ","
 
+" Airline options
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+" feline options
+" lua << END
+" require('feline').setup()
+" END
+
+" telescope options
+lua << END
+require('telescope').setup()
+END
+
+" blankline settings
+lua << END
+require("indent_blankline").setup{
+    show_current_context = true,
+    show_current_context_start = true,
+}
+END
+let g:indent_blankline_show_current_context_start = v:false
+
 " Comment options
 lua << END
 require('Comment').setup()
+END
+
+" nvim-treesitter settings
+lua << END
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "cpp", "python", "vim", "lua" },
+  sync_install = false,
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+  },
+}
 END
 
 " NvimTree options
@@ -55,13 +95,9 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
 
 " Theme options
-" let g:gruvbox_material_palette = 'mix'
+let g:gruvbox_material_palette = 'mix'
 let g:gruvbox_material_disable_italic_comment = 1
 let g:gruvbox_material_better_performance = 1
-
-" Airline options
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
 
 " set python path
 let g:python3_host_prog = '/data/data/com.termux/files/usr/bin/python3'
