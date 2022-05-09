@@ -31,5 +31,5 @@ colors = {
     "#ec1c24": "#af2cb6",
     "#985a2e": "#0f5682"
 }
-remove_spell("input.jpg", "up_and_down.png", **colors)
+remove_spell("broomstick.png", "up_and_down.png", **colors)
 
