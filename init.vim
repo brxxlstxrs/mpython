@@ -1,18 +1,22 @@
 " Plugins 
 call plug#begin()
-  Plug 'neoclide/coc.nvim', {'branch': 'release'} 
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
-  Plug 'preservim/nerdtree'
-  Plug 'preservim/nerdcommenter'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'LunarWatcher/auto-pairs'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-fugitive'
-  Plug 'sainnhe/gruvbox-material'
-  Plug 'joshdick/onedark.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'numToStr/Comment.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'jiangmiao/auto-pairs'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'sainnhe/gruvbox-material'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 " Let's make it beautiful
@@ -36,17 +40,49 @@ set nowritebackup
 set noswapfile
 set mouse=a
 
-" Theme options
-let g:gruvbox_material_palette = 'mix'
-let g:gruvbox_material_disable_italic_comment = 1
-
 " leader
 let mapleader = ","
 
 " Airline options
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+
+" telescope setups
+lua << END
+require('telescope').setup()
+END
+
+" Comment setups
+lua << END
+require('Comment').setup()
+END
+
+" nvim-treesitter settings
+lua << END
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "cpp", "python", "vim", "lua" },
+  sync_install = false,
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+  },
+}
+END
+
+" NvimTree options
+lua << END
+require('nvim-tree').setup()
+END
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
+
+" Python settings
 let g:python3_host_prog = '/data/data/com.termux/files/usr/bin/python3'
+
+" Theme options
+let g:gruvbox_material_palette = 'mix'
+let g:gruvbox_material_disable_italic_comment = 1
 
 " Coc settings
 
