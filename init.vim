@@ -1,22 +1,39 @@
 " Plugins 
 call plug#begin()
+" Autocomletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+
+" dynamic finders
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+
+" syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" statusline
+Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
+
+" plugin for comment
 Plug 'numToStr/Comment.nvim'
+
+" file explorer
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
+
+" auto pairs
 Plug 'jiangmiao/auto-pairs'
+
+" git support
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+
+" themes
 Plug 'sainnhe/gruvbox-material'
-Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Let's make it beautiful
@@ -33,7 +50,7 @@ set expandtab
 
 " Basic settings 
 set encoding=utf-8
-set updatetime=100
+set updatetime=300
 set hidden
 set nobackup
 set nowritebackup
@@ -42,10 +59,6 @@ set mouse=a
 
 " leader
 let mapleader = ","
-
-" Airline options
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
 
 " telescope setups
 lua << END
@@ -83,6 +96,10 @@ let g:python3_host_prog = '/data/data/com.termux/files/usr/bin/python3'
 " Theme options
 let g:gruvbox_material_palette = 'mix'
 let g:gruvbox_material_disable_italic_comment = 1
+
+" Airline options
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " Coc settings
 
@@ -153,6 +170,18 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -166,5 +195,20 @@ endif
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 
-" set theme
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+
+" Set Theme
 colorscheme gruvbox-material
