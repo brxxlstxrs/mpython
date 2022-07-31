@@ -1,2 +1,2 @@
 # MPYTHON
-My Yandex problem solving
+My Yandex problems solving
